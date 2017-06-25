@@ -1,0 +1,56 @@
+<?php
+        header('connect-type: text/html; charset-utf-8');
+        $db_host = "000.000.000.000";
+        $db_user = "root";
+        $db_pw = "password";
+        $db_name = "DB_name";
+
+        $conn = mysql_connect($db_host, $db_user, $db_pw) or die ("Disconnect");
+
+        mysql_query("SET NAMES UTF8");
+
+        $conn_table = mysql_select_db($db_name, $conn) or die ("Disconnect Table");;
+
+        session_start();
+
+        $name = $_POST[u_name];
+        $email = $_POST[u_email];
+        $id = $_POST[u_id];
+        $pw = $_POST[u_pw];
+        $mem_table = ID_.$id;
+        $val_table = VAL_.$id;
+
+        $mem_sql = "CREATE TABLE $mem_table(
+                        userName char(10) NOT NULL,
+                        userMail char(32) NOT NULL,
+                        userID char(15) PRIMARY KEY,
+                        userPW char(15) NOT NULL)" ;
+
+        $mem_result = mysql_query($mem_sql);
+
+        if($mem_result){
+                $mem_sql2 = "INSERT INTO $mem_table VALUES ('$name','$email','$id','$pw')";
+                $mem_result2 = mysql_query($mem_sql2);
+
+                if(!$mem_result2)
+                        echo "Join Fail";
+        }
+
+        $val_sql = "CREATE TABLE $val_table(
+                        userID char(15) PRIMARY KEY,
+                        setTemp char(2) NOT NULL,
+                        setTurb char(2) NOT NULL,
+                        setLevel char(2) NOT NULL)";
+
+        $val_result = mysql_query($val_sql);
+
+        if($val_result){
+                $val_sql2 = "INSERT INTO $val_table VALUES ('$id',0,0,0)";
+                $val_result2 = mysql_query($val_sql2);
+
+                if(!$val_result2)
+                        echo "Join Fail";
+        }
+
+        mysql_close();
+?>
