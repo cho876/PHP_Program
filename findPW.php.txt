@@ -1,0 +1,40 @@
+<?php
+        header('content-type: text/html; charset=utf-8');
+
+        $db_host = "000.000.000.000";
+        $db_user = "root";
+        $db_password = "password";
+        $db_name = "DB_name";
+
+        $conn = mysql_connect($db_host, $db_user, $db_password) or die ("Disconnect DB");
+        mysql_query("SET NAMES UTF8");
+
+        $conn_table = mysql_select_db($db_name, $conn) or die ("Disconnect Table");
+
+        session_start();
+
+        $id = $_POST[u_id];
+        $email = $_POST[u_email];
+        $table = ID_.$id;
+
+        $sql = "SELECT * FROM $table";
+        $result = mysql_query($sql);
+
+        if($result)
+        {
+                $sql2 = "SELECT IF(strcmp(userMail, '$email'),0,1) FROM $table";
+                $result2 = mysql_query($sql2);
+
+                if($result2)
+                {
+                        $row = mysql_fetch_array($result);
+                        echo "$row[3]";
+                }
+                else
+                        echo "Invalid findPW_result2";
+        }
+        else
+                echo "Invalid findPW_result";
+
+        mysql_close();
+?>
