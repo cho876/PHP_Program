@@ -1,0 +1,32 @@
+<?php
+        header('content-type: text/html; charset=utf-8');
+
+        $db_host = "000.000.000.000";
+        $db_user = "root";
+        $db_password = "password";
+        $db_name = "DB_name";
+
+        $conn = mysql_connect($db_host, $db_user, $db_password) or die ("Disconnect DB");
+        mysql_query("SET NAMES UTF8");
+
+        $conn_table = mysql_select_db($db_name, $conn) or die ("Disconnect Table");
+
+        session_start();
+
+        $id = $_POST[u_id];
+        $temp = $_POST[u_temp];
+        $turb = $_POST[u_turb];
+        $level = $_POST[u_level];
+        $table = VAL_.$id;
+
+        $sql = "SELECT * FROM $table";
+        $result = mysql_query($sql);
+
+        if($result)
+        {
+                $row = mysql_fetch_array($result);
+                echo "$row[1], $row[2], $row[3]";
+        }
+
+        mysql_close();
+?>
