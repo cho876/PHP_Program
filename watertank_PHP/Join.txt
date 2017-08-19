@@ -1,0 +1,32 @@
+<?php
+if(isset($_POST["u_name"]) && isset($_POST["u_email"]) && isset($_POST["u_id"]) && isset($_POST["u_pw"])){    // Input type -> POST
+        $user_name = $_POST["u_name"];
+        $user_email = $_POST["u_email"];
+        $user_id = $_POST["u_id"];
+        $user_pw = $_POST["u_pw"];
+        $user_table = ID_.$user_id;
+
+        include_once 'Config.php';
+        $conn = mysqli_connect(DB_HOST, DB_USER, DB_PW, DB_NAME);   // Connect DB
+        mysqli_query($conn, "SET NAMES UTF8");
+
+        $sql = "INSERT INTO MemDB VALUES ('$user_id','$user_email','$user_name','$user_pw')";   // Insert userInfo to MemDB
+        $result = mysqli_query($conn, $sql);
+
+        if($result){
+                $sql2 = "CREATE TABLE $user_table(
+                                userID char(15) PRIMARY KEY,
+                                setTemp char(5) NOT NULL,
+                                setTurb char(4) NOT NULL)";    // Create user's private table
+                $result2 = mysqli_query($conn, $sql2);
+
+                if($result2){
+                        $sql3 = "INSERT INTO $user_table VALUES ('$user_id','0','0')";   //  Initialize user's private table
+                        $result3 = mysqli_query($conn, $sql3);
+                        echo "1";
+                }
+                else "0";
+        }
+        mysqli_close($conn);
+}
+?>
