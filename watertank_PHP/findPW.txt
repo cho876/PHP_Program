@@ -1,0 +1,20 @@
+<?php
+if(isset($_POST["u_id"]) && isset($_POST["u_email"])){                 // Input type -> POST,
+        $user_id = $_POST["u_id"];
+        $user_email = $_POST["u_email"];
+
+        include_once 'Config.php';
+        $conn = mysqli_connect(DB_HOST, DB_USER, DB_PW, DB_NAME);        // Connect DB
+        mysqli_query($conn, "SET NAMES UTF8");
+
+        $sql = "SELECT userPW FROM MemDB WHERE userEmail = '$user_email' and userID = '$user_id'";    // Find userPW (by userEmail, userID)
+
+        $result = mysqli_query($conn, $sql);
+        if($result){
+                $row = mysqli_fetch_array($result);      
+                echo "$row[0]";				// return userPW
+        }else
+                echo "";
+        mysqli_close($conn);
+}
+?>
