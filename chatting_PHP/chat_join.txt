@@ -1,0 +1,22 @@
+<?php
+if(isset($_POST["u_name"]) && isset($_POST["u_email"]) && isset($_POST["u_pw"])){      // POST로 값이 들어올 경우
+        $user_name = $_POST["u_name"];
+        $user_email = $_POST["u_email"];
+        $user_pw = $_POST["u_pw"];
+        $partner_email = $_POST["u_partner"];
+
+        include_once 'Config.php';                                       // 'Config.php' => DB 정보 
+        $conn = mysqli_connect(DB_HOST, DB_USER, DB_PW, DB_NAME);
+        $utf_sql = "SET NAMES UTF8";
+        mysqli_query($conn, $utf_sql);
+
+        $sql = "INSERT INTO users VALUES ('$user_email', '$user_name', '$user_pw', '-')";      // users table에 사용자 정보 저장
+        $result = mysqli_query($conn, $sql);
+        if($result)
+                echo "Success";
+        else
+                echo "Fail";
+
+        mysqli_close($conn);
+}
+?>
