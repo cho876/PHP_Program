@@ -1,33 +1,34 @@
 <?php
-if(isset($_POST["u_id"]) && isset($_POST["u_pw"])){                  // Input type -> POST
+if(isset($_POST["u_id"]) && isset($_POST["u_pw"])){                  // Connect By POST type
+이 들어올 시,
         $user_id = $_POST["u_id"];
         $user_pw = $_POST["u_pw"];
-        $user_table = ID_.$user_id;     // user 만의 정보를 갖는 table 이름
+        $user_table = ID_.$user_id;     // user's private table
 
         include_once 'Config.php';
-        $conn = mysqli_connect(DB_HOST, DB_USER, DB_PW, DB_NAME);    // DB 접속
+        $conn = mysqli_connect(DB_HOST, DB_USER, DB_PW, DB_NAME);    // Connect DB
         mysqli_query($conn, "SET NAMES UTF8");
 
-        $sql = "SELECT * FROM MemDB WHERE userID = '$user_id' and userPW = '$user_pw'";    // Find user (by userID, userPW)
+        $sql = "SELECT * FROM MemDB WHERE userID = '$user_id' and userPW = '$user_pw'";    // Find user's information (by userID, userPW)
         $result = mysqli_query($conn, $sql);
 
         if($result){
                 $row = mysqli_fetch_array($result);
                 if(is_null($row))
-                        echo "0";
+                        echo "result";
                 else{                                                  // If user exists,
                         $sql2 = "SELECT * FROM $user_table";
                         $result2 = mysqli_query($conn, $sql2);
                         if($result2){
                                 $row2 = mysqli_fetch_array($result2);
-                                $sql3 = "UPDATE CurDB SET setTemp=$row2[1], setTurb=$row2[2]";   // Update CurDB values (by Current user's values)
+                                $sql3 = "UPDATE CurDB SET setTemp=$row2[1], setTurb=$row2[2]";   // Update setTemp, setTurb (by current login user's data)
                                 $result3 = mysqli_query($conn, $sql3);
                                 if($result3)
                                         echo "1";
                                 else
-                                        echo "0";
+                                        echo "result3";
                         }else
-                                echo "0";
+                                echo "result2";
                 }
         }
         mysqli_close($conn);
