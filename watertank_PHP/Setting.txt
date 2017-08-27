@@ -1,20 +1,20 @@
 <?php
-if(isset($_POST["u_id"]) && isset($_POST["u_temp"]) && isset($_POST["u_turb"])){         // Input type -> POST
+if(isset($_POST["u_id"]) && isset($_POST["u_temp"]) && isset($_POST["u_turb"])){         // Connect By POST type
         $user_id = $_POST["u_id"];
         $user_temp = $_POST["u_temp"];
         $user_turb = $_POST["u_turb"];
-        $user_table = ID_.$user_id;     // user's private table name
+        $user_table = ID_.$user_id;     // user¸¸ÀÇ table
 
         include_once 'Config.php';
         $conn = mysqli_connect(DB_HOST, DB_USER, DB_PW, DB_NAME);
 
         mysqli_query($conn, "SET NAMES UTF8");
 
-        $sql = "UPDATE $user_table SET setTemp = '$user_temp', setTurb = '$user_turb'";      // Update values (in user's private table)
+        $sql = "UPDATE $user_table SET setTemp = '$user_temp', setTurb = '$user_turb'";      // Update user's private table's setTemp, setTurb (by received data)
         $result = mysqli_query($conn, $sql);
 
         if($result){
-                $sql2 = "UPDATE CurDB SET setTemp = '$user_temp', setTurb = '$user_turb'";   // Update CurDB values (by user's private table values)
+                $sql2 = "UPDATE CurDB SET setTemp = '$user_temp', setTurb = '$user_turb'";    // Update CurDB's setTemp, setTurb (by received data)
                 $result2 = mysqli_query($conn, $sql2);
         if($result2)
                         echo "1";
