@@ -1,5 +1,5 @@
 <?php
-if(isset($_POST["u_id"]) && isset($_POST["u_email"])){                 // Input type -> POST,
+if(isset($_POST["u_id"]) && isset($_POST["u_email"])){                 // Connect By POST type
         $user_id = $_POST["u_id"];
         $user_email = $_POST["u_email"];
 
@@ -11,8 +11,8 @@ if(isset($_POST["u_id"]) && isset($_POST["u_email"])){                 // Input 
 
         $result = mysqli_query($conn, $sql);
         if($result){
-                $row = mysqli_fetch_array($result);      
-                echo "$row[0]";				// return userPW
+                $row = mysqli_fetch_array($result);      // If found, return userPW
+                echo "$row[0]";
         }else
                 echo "";
         mysqli_close($conn);
