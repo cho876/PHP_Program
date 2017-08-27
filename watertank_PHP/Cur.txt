@@ -3,12 +3,12 @@
         $conn = mysqli_connect(DB_HOST, DB_USER, DB_PW, DB_NAME);    // Connect DB
         mysqli_query($conn, "SET NAMES UTF8");
 
-        $sql = "SELECT * FROM CurDB";   // Show CurDB's values
+        $sql = "SELECT * FROM CurDB";   // Select all Queries in CurDB(=Login Users data, modules status) 
         $result = mysqli_query($conn, $sql);
 
         if($result){
                 $row = mysqli_fetch_array($result);
-                echo "$row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8]"; // Get CurDB's values
+                echo "$row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8]";  // Return all Queries in CurDB
         }
         mysqli_close($conn);
 ?>
